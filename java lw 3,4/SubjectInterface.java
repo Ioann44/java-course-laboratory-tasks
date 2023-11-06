@@ -1,3 +1,7 @@
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.Writer;
+
 public interface SubjectInterface {
 
 	// get / set
@@ -17,4 +21,9 @@ public interface SubjectInterface {
 	public double getAvgGrade();
 
 	public int getResultedGrade();
+
+	// write byte/symbol
+	public void output(OutputStream out) throws IOException;
+
+	public void write(Writer out) throws IOException;
 }

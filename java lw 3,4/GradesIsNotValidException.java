@@ -1,4 +1,4 @@
-public class GradesIsNotValidException extends Exception {
+public class GradesIsNotValidException extends RuntimeException {
 	public GradesIsNotValidException(String message) {
 		super(message);
 	}

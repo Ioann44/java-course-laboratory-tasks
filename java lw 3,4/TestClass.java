@@ -1,9 +1,13 @@
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.Serializable;
+import java.io.Writer;
 import java.util.Arrays;
 
 /**
  * TestClass
  */
-public class TestClass implements SubjectInterface {
+public class TestClass implements SubjectInterface, Serializable {
 	int[] grades;
 	String name;
 	int hoursCount;
@@ -65,9 +69,8 @@ public class TestClass implements SubjectInterface {
 
 	@Override
 	public String toString() {
-		return "Зачёт [оценки=" + Arrays.toString(grades) + ", название=\"" + name + "\", количество часов="
-				+ hoursCount
-				+ "]";
+		return String.format("Зачёт [оценки=%s, название=\"%s\", количество часов=%d]",
+				Arrays.toString(grades), name, hoursCount);
 	}
 
 	// #region getters and setters
@@ -75,7 +78,7 @@ public class TestClass implements SubjectInterface {
 		return grades;
 	}
 
-	public void setGrades(int[] grades) throws GradesIsNotValidException {
+	public void setGrades(int[] grades) {
 		if (!GradesIsNotValidException.validateGradesArray(grades)) {
 			throw new GradesIsNotValidException("Grades is not valid");
 		}
@@ -96,6 +99,30 @@ public class TestClass implements SubjectInterface {
 
 	public void setHoursCount(int hoursCount) {
 		this.hoursCount = hoursCount;
+	}
+	// #endregion
+
+	// #region write byte/symbol
+	public void output(OutputStream out) throws IOException {
+		out.write('T');
+		out.write(grades.length);
+		for (int grade : grades) {
+			out.write(grade);
+		}
+		out.write(name.length());
+		out.write(name.getBytes());
+		out.write(hoursCount);
+	}
+
+	public void write(Writer out) throws IOException {
+		char delimiter = ';';
+		out.write("T" + delimiter);
+		out.write(Integer.toString(grades.length) + delimiter);
+		for (int grade : grades) {
+			out.write(Integer.toString(grade) + delimiter);
+		}
+		out.write(name + delimiter);
+		out.write(Integer.toString(hoursCount) + '\n');
 	}
 	// #endregion
 }
