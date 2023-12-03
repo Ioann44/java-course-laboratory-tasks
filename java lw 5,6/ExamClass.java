@@ -3,6 +3,7 @@ import java.io.OutputStream;
 import java.io.Serializable;
 import java.io.Writer;
 import java.util.Arrays;
+import java.util.Iterator;
 
 /**
  * ExamClass
@@ -19,6 +20,11 @@ public class ExamClass implements SubjectInterface, Serializable {
 		this.grades = grades;
 		this.name = name;
 		this.hoursCount = hoursCount;
+	}
+
+	@Override
+	public Iterator<Integer> iterator() {
+		return new GradesIterator(grades);
 	}
 
 	public double getAvgGrade() {
@@ -38,7 +44,7 @@ public class ExamClass implements SubjectInterface, Serializable {
 
 	@Override
 	public String toString() {
-		return String.format("Зачёт [оценки=%s, название=\"%s\", количество часов=%d]",
+		return String.format("Экзамен [оценки=%s, название=\"%s\", количество часов=%d]",
 				Arrays.toString(grades), name, hoursCount);
 	}
 

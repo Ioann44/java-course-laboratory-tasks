@@ -1,8 +1,12 @@
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
+import java.util.Iterator;
 
-public interface SubjectInterface {
+public interface SubjectInterface extends Iterable<Integer> {
+	// iterator
+	@Override
+	Iterator<Integer> iterator();
 
 	// get / set
 	public int getGrade(int index);

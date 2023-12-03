@@ -11,6 +11,20 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SubjectIO {
+	private static SubjectFactory factory = new ExamClassFactory();
+
+	public static void setSubjectInterfaceFactory(SubjectFactory newFactory) {
+		factory = newFactory;
+	}
+
+	public static SubjectInterface createInstance() {
+		return factory.createInstance();
+	}
+
+	public static SubjectInterface unmodifiableSubject(SubjectInterface object) {
+		return new UnmodifiableSubject(object);
+	}
+
 	public static SyncedSubject getSyncedSubject(SubjectInterface subject) {
 		return new SyncedSubject(subject);
 	}

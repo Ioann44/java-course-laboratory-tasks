@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
+import java.util.Iterator;
 
 public class SyncedSubject implements SubjectInterface {
 	private final Object lock = new Object();
@@ -9,6 +10,11 @@ public class SyncedSubject implements SubjectInterface {
 	public SyncedSubject(SubjectInterface subject) {
 		this.subject = subject;
 	}
+
+	@Override
+    public synchronized Iterator<Integer> iterator() {
+		return subject.iterator();
+    }
 
 	// get / set
 	// mark

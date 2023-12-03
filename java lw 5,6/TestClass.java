@@ -3,6 +3,7 @@ import java.io.OutputStream;
 import java.io.Serializable;
 import java.io.Writer;
 import java.util.Arrays;
+import java.util.Iterator;
 
 /**
  * TestClass
@@ -19,6 +20,11 @@ public class TestClass implements SubjectInterface, Serializable {
 		this.grades = grades;
 		this.name = name;
 		this.hoursCount = hoursCount;
+	}
+
+	@Override
+	public Iterator<Integer> iterator() {
+		return new GradesIterator(grades);
 	}
 
 	public double getAvgGrade() {
