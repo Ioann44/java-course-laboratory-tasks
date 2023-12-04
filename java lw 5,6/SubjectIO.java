@@ -50,11 +50,11 @@ public class SubjectIO {
 		String name = new String(nameBytes);
 		int hoursCount = dis.read();
 
-		if (type == 'T') {
-			return new TestClass(grades, name, hoursCount);
-		} else {
-			return new ExamClass(grades, name, hoursCount);
-		}
+		SubjectInterface test = createInstance();
+		test.setGrades(grades);
+		test.setName(name);
+		test.setHoursCount(hoursCount);
+		return test;
 	}
 
 	// запись в символьный поток
