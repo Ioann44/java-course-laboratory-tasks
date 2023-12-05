@@ -36,7 +36,7 @@ public class SubjectIO {
 
 	// чтениe из байтового потока
 	public static SubjectInterface input(InputStream dis) throws IOException {
-		char type = (char) dis.read();
+		dis.read();
 		int gradesLen = dis.read();
 		int grades[] = new int[gradesLen];
 		for (int i = 0; i < gradesLen; i++) {

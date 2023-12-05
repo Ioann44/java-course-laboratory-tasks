@@ -10,7 +10,7 @@ public interface SubjectInterface extends Iterable<Integer> {
 
 	public void setGrade(int index, int value);
 
-	public void setGrades(int[] salaries) throws GradesIsNotValidException;
+	public void setGrades(int[] grades) throws GradesIsNotValidException;
 
 	public String getName();
 
