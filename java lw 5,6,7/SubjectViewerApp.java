@@ -18,9 +18,12 @@ public class SubjectViewerApp extends JFrame {
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 
         JScrollPane scrollPane = new JScrollPane(mainPanel);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         getContentPane().add(scrollPane, BorderLayout.CENTER);
 
         createMenuBar();
+        createLookAndFeelSelector();
         setVisible(true);
     }
 
@@ -55,7 +58,7 @@ public class SubjectViewerApp extends JFrame {
 
         genItem.addActionListener(e -> {
             database.clear();
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 10; i++) {
                 database.add(SubjectIO.createInstance());
             }
             displayDatabase();
@@ -77,7 +80,7 @@ public class SubjectViewerApp extends JFrame {
             JPanel panel = new JPanel();
             panel.setBorder(BorderFactory.createEtchedBorder());
             panel.setPreferredSize(new Dimension(200, 50));
-            String message = "Object #" + Integer.toString(i + 1) + '\n' + subject.toString();
+            String message = "Дисциплина #" + Integer.toString(i + 1) + '\n' + subject.toString();
             panel.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
@@ -95,5 +98,40 @@ public class SubjectViewerApp extends JFrame {
 
     private void showMessage(String message) {
         JOptionPane.showMessageDialog(this, message);
+    }
+
+    private void createLookAndFeelSelector() {
+        JPanel lookAndFeelPanel = new JPanel();
+        lookAndFeelPanel.setBorder(BorderFactory.createTitledBorder("Выберите тему оформления:"));
+
+        UIManager.LookAndFeelInfo[] lookAndFeels = UIManager.getInstalledLookAndFeels();
+        ButtonGroup group = new ButtonGroup();
+
+        for (UIManager.LookAndFeelInfo laf : lookAndFeels) {
+            JRadioButton radioButton = new JRadioButton(laf.getName());
+            radioButton.addActionListener(new LookAndFeelListener(laf.getClassName()));
+            group.add(radioButton);
+            lookAndFeelPanel.add(radioButton);
+        }
+
+        getContentPane().add(lookAndFeelPanel, BorderLayout.NORTH);
+    }
+
+    private class LookAndFeelListener implements ActionListener {
+        private String className;
+
+        public LookAndFeelListener(String className) {
+            this.className = className;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                UIManager.setLookAndFeel(className);
+                SwingUtilities.updateComponentTreeUI(SubjectViewerApp.this);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 }
